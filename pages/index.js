@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "../hooks/useUser";
+import { useRouter } from "next/router";
 
 function Home() {
   const {
@@ -10,7 +11,14 @@ function Home() {
     loading,
     error,
     login,
-  } = useUser();
+    user,
+  } = useUser("user");
+  const router = useRouter();
+
+  //route to users page if user exist
+  useEffect(() => {
+    if (user?.first_name) router?.push("/users");
+  }, [router, user]);
 
   //login method
   //routes to users data pages after login
@@ -22,6 +30,7 @@ function Home() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center mx-auto vh-100">
+      <h3>Login</h3>
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit} className="col-md-5 col-lg-4">
         <div className="form-group mb-3">

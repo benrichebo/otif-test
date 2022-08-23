@@ -13,10 +13,10 @@ function Users({ users }) {
 
     const results = users.filter(
       (user) =>
-        user.username?.includes(text) ||
-        user.first_name?.includes(text) ||
-        user.last_name?.includes(text) ||
-        user.phone_num?.includes(text)
+        user.username?.toLowerCase().includes(text.toLowerCase()) ||
+        user.first_name?.toLowerCase().includes(text.toLowerCase()) ||
+        user.last_name?.toLowerCase().includes(text.toLowerCase()) ||
+        user.phone_num?.toLowerCase().includes(text.toLowerCase())
     );
 
     if (text?.length >= 1) {
@@ -49,7 +49,6 @@ function Users({ users }) {
           />
         </div>
         <div className="my-4">
-          {message && <p>{message}</p>}
           {data?.length == 1 ? (
             <>
               <h3>
@@ -62,35 +61,40 @@ function Users({ users }) {
               <p>Verified: {data[0]?.verified}</p>
             </>
           ) : (
-            <table className="table">
-              <thead>
-                <tr>
-                  <th>Full name</th>
-                  <th>User name</th>
-                  <th>Email</th>
-                  <th>Phone number</th>
-                </tr>
-              </thead>
-              <tbody>
-                {!data ? (
-                  "loading..."
-                ) : (
-                  <>
-                    {data?.length > 0 &&
-                      data?.map((user) => (
-                        <tr key={user?.username}>
-                          <td scope="row">
-                            {user?.first_name} {user?.last_name}
-                          </td>
-                          <td>{user?.username}</td>
-                          <td>{user?.email}</td>
-                          <td>{user?.phone_num}</td>
-                        </tr>
-                      ))}
-                  </>
+            <>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Full name</th>
+                    <th>User name</th>
+                    <th>Email</th>
+                    <th>Phone number</th>
+                  </tr>
+                </thead>
+                {message && <p>{message}</p>}
+                {!message && (
+                  <tbody>
+                    {!data ? (
+                      "loading..."
+                    ) : (
+                      <>
+                        {data?.length > 0 &&
+                          data?.map((user) => (
+                            <tr key={user?.username}>
+                              <td scope="row">
+                                {user?.first_name} {user?.last_name}
+                              </td>
+                              <td>{user?.username}</td>
+                              <td>{user?.email}</td>
+                              <td>{user?.phone_num}</td>
+                            </tr>
+                          ))}
+                      </>
+                    )}
+                  </tbody>
                 )}
-              </tbody>
-            </table>
+              </table>
+            </>
           )}
         </div>
       </div>
