@@ -30,10 +30,10 @@ function Home() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center mx-auto vh-100">
-      <h3>Login</h3>
       {error && <p>{error}</p>}
       <form onSubmit={handleSubmit} className="col-md-5 col-lg-4">
-        <div className="form-group mb-3">
+        <h3>Login</h3>
+        <div className="form-group my-3">
           <label htmlFor="username">Username</label>
           <input
             type="text"
