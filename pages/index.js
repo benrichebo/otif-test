@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "../hooks/useUser";
+import { useRouter } from "next/router";
 
 function Home() {
   const {
@@ -10,7 +11,14 @@ function Home() {
     loading,
     error,
     login,
-  } = useUser();
+    user,
+  } = useUser("user");
+  const router = useRouter();
+
+  //route to users page if user exist
+  useEffect(() => {
+    if (user?.first_name) router?.push("/users");
+  }, [router, user]);
 
   //login method
   //routes to users data pages after login
